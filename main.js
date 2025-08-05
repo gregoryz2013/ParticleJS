@@ -101,6 +101,82 @@ function addParticle(type, x, y) {
     return p;
 }
 
+function addButterfly(x, y) {
+  const p1 = addParticle(0, x - 4, y + 18);
+  const p2 = addParticle(1, x - 4, y);
+  const p3 = addParticle(2, x - 4, y - 18);
+  const p4 = addParticle(0, x - 4, y - 28);
+  const p6 = addParticle(0, x + 4, y + 18);
+  const p7 = addParticle(1, x + 4, y);
+  const p8 = addParticle(2, x + 4, y - 18);
+  const p9 = addParticle(0, x + 4, y - 28);
+
+  linkParticles(p1, p2);
+  linkParticles(p2, p3);
+  linkParticles(p2, p7);
+  linkParticles(p6, p7);
+  linkParticles(p8, p7);
+  linkParticles(p8, p9);
+}
+
+function addGlider(x, y) {
+  const p1 = addParticle(0, x - 4, y);
+  const p2 = addParticle(2, x - 2, y);
+  const p3 = addParticle(2, x + 2, y);
+  const p4 = addParticle(0, x + 4, y);
+
+  linkParticles(p1, p2);
+  linkParticles(p2, p3);
+  linkParticles(p3, p4);
+}
+
+function addSnake(x, y) {
+  const p1 = addParticle(0, x - 4, y);
+  const p2 = addParticle(2, x - 2, y);
+  const p3 = addParticle(2, x + 2, y);
+  const p4 = addParticle(1, x + 4, y);
+  const p5 = addParticle(1, x + 6, y + 2);
+  const p6 = addParticle(0, x + 6, y + 4);
+  const p7 = addParticle(1, x + 6, y - 2);
+  const p8 = addParticle(0, x + 6, y - 4);
+
+  linkParticles(p1, p2);
+  linkParticles(p2, p3);
+  linkParticles(p3, p4);
+  linkParticles(p4, p5);
+  linkParticles(p4, p7);
+  linkParticles(p5, p6);
+  linkParticles(p7, p8);
+}
+
+function addSpinner(x, y) {
+  const p1 = addParticle(0, x - 4, y - 18);
+  const p2 = addParticle(1, x - 4, y);
+  const p3 = addParticle(2, x - 4, y + 18);
+  const p4 = addParticle(0, x - 4, y + 28);
+  const p6 = addParticle(0, x + 4, y + 18);
+  const p7 = addParticle(1, x + 4, y);
+  const p8 = addParticle(2, x + 4, y - 18);
+  const p9 = addParticle(0, x + 4, y - 28);
+
+  linkParticles(p1, p2);
+  linkParticles(p2, p3);
+  linkParticles(p2, p7);
+  linkParticles(p6, p7);
+  linkParticles(p8, p7);
+  linkParticles(p8, p9);
+}
+
+function linkParticles(a, b) {
+  links.push({ a, b });
+  a.links = (a.links || 0) + 1;
+  b.links = (b.links || 0) + 1;
+  if (!a.bonds) a.bonds = [];
+  if (!b.bonds) b.bonds = [];
+  a.bonds.push(b);
+  b.bonds.push(a);
+}
+
 function rebuildFields() {
     for (let i = 0; i < fw; i++) {
         for (let j = 0; j < fh; j++) {
@@ -434,5 +510,6 @@ for (let i = 0; i < NODE_COUNT; i++) {
 }
 
 animate();
+
 
 
