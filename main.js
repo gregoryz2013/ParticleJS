@@ -70,13 +70,24 @@ class Link {
         this.a = a;
         this.b = b;
     }
+
     draw(ctx) {
         const dx = this.a.x - this.b.x;
         const dy = this.a.y - this.b.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
+
+        // Dynamic line width based on distance
         const width = 100 / Math.pow(dist, 1.3);
-        ctx.strokeStyle = ParticleTypes[this.a.type].color;
-        ctx.lineWidth = width;
+
+        // Create gradient from color of particle A to color of particle B
+        const gradient = ctx.createLinearGradient(this.a.x, this.a.y, this.b.x, this.b.y);
+        gradient.addColorStop(0, ParticleTypes[this.a.type].color);  // Start: color of A
+        gradient.addColorStop(1, ParticleTypes[this.b.type].color);  // End: color of B
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = Math.min(width, NODE_RADIUS * 2); // Avoid invisible lines
+        ctx.lineCap = 'round'; // Smooth ends
+
         ctx.beginPath();
         ctx.moveTo(this.a.x, this.a.y);
         ctx.lineTo(this.b.x, this.b.y);
@@ -423,4 +434,5 @@ for (let i = 0; i < NODE_COUNT; i++) {
 }
 
 animate();
+
 
