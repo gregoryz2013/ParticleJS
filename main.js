@@ -384,6 +384,11 @@ let lastTimestamp = 0;
 let c = 0;
 
 function animate(timestamp) {
+    canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const w = canvas.width;
+const h = canvas.height;
     const delta = (timestamp - lastTimestamp) / 60;
     lastTimestamp = timestamp;
 
@@ -418,3 +423,4 @@ for (let i = 0; i < NODE_COUNT; i++) {
 }
 
 animate();
+
